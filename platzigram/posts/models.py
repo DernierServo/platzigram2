@@ -20,4 +20,8 @@ class User(models.Model):
     birthdate = models.DateField(blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
-    uodated = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """Return email."""
+        return self.email 
