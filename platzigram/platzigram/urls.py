@@ -18,6 +18,9 @@ from django.urls import path
 from . import views as local_views
 from posts import views as posts_views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello-world/', local_views.hello_world, name='n_hello-world'),
@@ -25,4 +28,5 @@ urlpatterns = [
     path('hi/<str:p_name>/<int:p_age>/', local_views.say_hi, name='n_say_hi'),
 
     path('posts/', posts_views.list_posts, name='n_posts'),
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
