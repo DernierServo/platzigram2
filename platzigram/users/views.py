@@ -15,6 +15,7 @@ from users.models import Profile
 # Forms
 from users.forms import ProfileForm
 
+
 def login_view(request):
     """Login view."""
     #import pdb; pdb.set_trace()
@@ -90,6 +91,7 @@ def logout_view(request):
     return redirect('n_users-login')
 
 
+@login_required
 def update_profile(request):
     """Update a user's profile view."""
     profile = request.user.profile
