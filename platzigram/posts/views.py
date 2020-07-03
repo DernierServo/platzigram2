@@ -33,7 +33,7 @@ def create_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('n_posts')
+            return redirect('posts:n_posts')
 
     else:
         form = PostForm()

@@ -18,7 +18,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
-            return redirect('n_posts')
+            return redirect('posts:n_posts')
         else:
             return render (
                 request, 
@@ -40,7 +40,7 @@ def signup(request):
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('n_users-login')
+            return redirect('users:n_login')
     else:
         form = SignupForm()
 
@@ -58,7 +58,7 @@ def logout_view(request):
     """Logout a user."""
     logout(request)
 
-    return redirect('n_users-login')
+    return redirect('users:n_login')
 
 
 @login_required
@@ -76,7 +76,7 @@ def update_profile(request):
             profile.picture = data['picture']
             profile.save()
             
-            return redirect('n_users-me-profile')
+            return redirect('users:n_me-profile')
     else:
         form = ProfileForm()
 

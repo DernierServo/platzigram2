@@ -6,7 +6,7 @@
 
 {% block container %}
 
-    <form action="{% url 'n_signup' %}" method="POST">
+    <form action="{% url 'users:n_signup' %}" method="POST">
         {% csrf_token %}
 
         {{ form.as_p }}
