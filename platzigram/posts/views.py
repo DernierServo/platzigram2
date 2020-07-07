@@ -1,10 +1,13 @@
 """Post views."""
 
 # Django
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView
+from django.views.generic import CreateView, DetailView, ListView
+
+# Django
+from django.urls import reverse_lazy
+
 # Forms
 from posts.forms import PostForm
 
@@ -24,24 +27,26 @@ class PostsFeedView(LoginRequiredMixin, ListView):
 
 
 
-@login_required
-def create_post(request):
-    """Create posts."""
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('posts:n_posts')
+class PostDetailView(LoginRequiredMixin, DetailView):
+    """Return post detail."""
 
-    else:
-        form = PostForm()
+    template_name = 'posts/detail.html'
+    queryset = Post.objects.all()
+    context_object_name = 'post'
 
-    return render(
-        request,
-        'posts/new.html',
-        {
-            'form': form,
-            'user': request.user,
-            'profile': request.user.profile
-        }
-    )
+
+
+class CreatePostView(LoginRequiredMixin, CreateView):
+    """Create a new post."""
+
+    template_name = 'posts/new.html'
+    form_class = PostForm
+    success_url = reverse_lazy('posts:n_posts')
+
+    def get_context_data(self, **kwargs):
+        """Add user and profile to context."""
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        context['profile'] = self.request.user.profile
+        
+        return context

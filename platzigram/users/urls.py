@@ -1,4 +1,4 @@
-"""Posts URLs."""
+"""Users URLs."""
 
 # Django
 from django.urls import path
@@ -7,6 +7,28 @@ from django.urls import path
 from users import views
 
 urlpatterns = [
+    # Management
+    path(
+        route='login/', 
+        view=views.login_view, 
+        name='n_login'
+    ),
+    path(
+        route='logout/', 
+        view=views.logout_view, 
+        name='n_logout'
+    ),
+    path(
+        route='signup/', 
+        view=views.SignupView.as_view(), 
+        name='n_signup'
+    ),
+    path(
+        route='me/profile/', 
+        view=views.UpdateProfileView.as_view(), 
+        name='n_me-profile'
+    ),
+
     # Posts
     path(
         route='<str:p_username>/',
@@ -14,26 +36,5 @@ urlpatterns = [
         name='n_detail'
     ),
 
-    # Management
-    path(
-        route='users/login/', 
-        view=views.login_view, 
-        name='n_login'
-    ),
-    path(
-        route='users/logout/', 
-        view=views.logout_view, 
-        name='n_logout'
-    ),
-    path(
-        route='users/signup/', 
-        view=views.signup, 
-        name='n_signup'
-    ),
-    path(
-        route='users/me/profile/', 
-        view=views.update_profile, 
-        name='n_me-profile'
-    ),
 ]
 
